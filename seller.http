@@ -1,0 +1,11 @@
+### 판매자 회원가입
+POST http://localhost:8080/seller/signUp
+Content-Type: application/json
+
+{
+  "email": "seller1@example.com",
+  "username": "seller1",
+  "password": "seller1-password",
+}
+
+###
