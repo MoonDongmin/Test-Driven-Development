@@ -1,11 +1,4 @@
 import {
-    describe,
-    beforeEach,
-    it,
-    expect,
-    beforeAll,
-}                              from "bun:test";
-import {
     Test,
     TestingModule,
 }                              from "@nestjs/testing";
@@ -13,9 +6,20 @@ import type {INestApplication} from "@nestjs/common";
 import request                 from "supertest";
 import {AppModule}             from "@/app.module";
 import {CreateSellerCommand}   from "@/commerce/command/create-seller-command";
+import {EmailGenerator}        from "../../../email-generator";
+import {UsernameGenerator}     from "../../../username-generator";
+import {PasswordGenerator}     from "../../../password-generator";
+import {Repository}            from "typeorm";
+import {Seller}                from "@/seller";
+import {getRepositoryToken}    from "@nestjs/typeorm";
 
 describe("Post /seller/signUp", () => {
     let app: INestApplication;
+    let sellerRepository: Repository<Seller>;
+
+    const {generateUsername} = UsernameGenerator;
+    const {generateEmail} = EmailGenerator;
+    const {generatePassword} = PasswordGenerator;
 
     beforeAll(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -23,14 +27,15 @@ describe("Post /seller/signUp", () => {
         }).compile();
 
         app = moduleFixture.createNestApplication();
+        sellerRepository = moduleFixture.get(getRepositoryToken(Seller)); // repository 등록
         await app.init();
     });
 
     it("올바르게 요청하면 204 No Content 상태코드를 반환한다", async () => {
         // Arrange
         const command: CreateSellerCommand = {
-            email: "seller@test.com",
-            username: "seller",
+            email: generateEmail(),
+            username: generateUsername(),
             password: "password",
         };
 
@@ -47,7 +52,7 @@ describe("Post /seller/signUp", () => {
         // Arrange
         const command: CreateSellerCommand = {
             email: undefined,
-            username: "seller",
+            username: generateUsername(),
             password: "password",
         };
 
@@ -69,8 +74,8 @@ describe("Post /seller/signUp", () => {
     ])("email 속성이 올바른 형식을 따르지 않으면 400 Bad Request 상태코드를 반환한다", async (email: string) => {
         // Arrange
         const command: CreateSellerCommand = {
-            email,
-            username: "seller",
+            email: email,
+            username: generateUsername(),
             password: "password",
         };
 
@@ -86,7 +91,7 @@ describe("Post /seller/signUp", () => {
     it("username 속성이 지정되지 않으면 400 Bad Request 상태코드를 반환한다", async () => {
         // Arrange
         const command: CreateSellerCommand = {
-            email: "seller@test.com",
+            email: generateEmail(),
             username: undefined,
             password: "password",
         };
@@ -109,7 +114,7 @@ describe("Post /seller/signUp", () => {
         "seller@",
     ])("password 속성이 올바른 형식을 따르지 않으면 400 Bad Request 상태코드를 반환한다", async (username: string) => {
         const command: CreateSellerCommand = {
-            email: "seller@test.com",
+            email: generateEmail(),
             username,
             password: "password",
         };
@@ -131,7 +136,7 @@ describe("Post /seller/signUp", () => {
         "seller-",
     ])("username 속성이 올바른 형식을 따르면 204 No Content 상태코드를 반환한다", async (username: string) => {
         const command: CreateSellerCommand = {
-            email: "seller@test.com",
+            email: generateEmail(),
             username,
             password: "password",
         };
@@ -147,8 +152,8 @@ describe("Post /seller/signUp", () => {
 
     it("password 속성이 지정되지 않으면 400 Bad Request 상태코드를 반환한다", async () => {
         const command: CreateSellerCommand = {
-            email: "seller@test.com",
-            username: "seller",
+            email: generateEmail(),
+            username: generateUsername(),
             password: undefined,
         };
 
@@ -168,7 +173,7 @@ describe("Post /seller/signUp", () => {
     ])("password 속성이 올바른 형식을 따르지 않으면 400 Bad Request 상태코드를 반환한다", async (password: string) => {
         const command: CreateSellerCommand = {
             email: "seller@test.com",
-            username: "seller",
+            username: generateUsername(),
             password,
         };
 
@@ -183,12 +188,12 @@ describe("Post /seller/signUp", () => {
 
     it("email 속성에 이미 존재하는 이메일 주소가 지정되면 400 Bad Request 상태코드를 반환한다", async () => {
         // Arrange
-        const email = "seller@test.com";
+        const email = generateEmail();
         await request(app.getHttpServer())
             .post("/seller/signUp")
             .send({
                 email,
-                username: "seller",
+                username: generateUsername(),
                 password: "password",
             });
 
@@ -197,11 +202,55 @@ describe("Post /seller/signUp", () => {
             .post("/seller/signUp")
             .send({
                 email,
-                username: "seller",
+                username: generateUsername(),
                 password: "password",
             });
 
         // Assert
         expect(response.statusCode).toBe(400);
+    });
+
+    it("username 속성에 이미 존재하는 사용자이름이 지정되면 400 Bad Request 상태코드를 반환한다", async () => {
+        // Arrange
+        const username = "seller";
+        await request(app.getHttpServer())
+            .post("/seller/signUp")
+            .send({
+                email: generateEmail(),
+                username,
+                password: "password",
+            });
+
+        // Act
+        const response = await request(app.getHttpServer())
+            .post("/seller/signUp")
+            .send({
+                email: generateEmail(),
+                username,
+                password: "password",
+            });
+
+        // Assert
+        expect(response.statusCode).toBe(400);
+    });
+
+    it("비밀번호를 올바르게 암호화한다", async () => {
+        // Arrange
+        const command: CreateSellerCommand = {
+            email: generateEmail(),
+            username: generateUsername(),
+            password: generatePassword(),
+        };
+
+        // Act
+        await request(app.getHttpServer())
+            .post("/seller/signUp")
+            .send(command);
+
+        // Assert
+        const seller = await sellerRepository.findOneBy({email: command.email});
+        const isMatch = await Bun.password.verify(command.password!, seller?.password!);
+        expect(isMatch).toBe(true);
+        
     });
 });

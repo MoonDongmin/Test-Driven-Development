@@ -11,4 +11,12 @@ export class Seller {
 
     @Column({unique: true})
     email: string;
+
+    @Column({unique: true})
+    username: string;
+
+    @Column({
+        length: 1000,
+    })
+    password: string;
 }

@@ -28,9 +28,15 @@ export class SellerSignUpController {
             return res.status(HttpStatus.BAD_REQUEST).send();
         }
 
+        const hashedPassword = await Bun.password.hash(command.password!, {
+            algorithm: "bcrypt",
+        });
+
         try {
             await this.sellerRepository.save({
                 email: command.email,
+                username: command.username,
+                password: hashedPassword,
             });
         } catch (e) {
             return res.status(HttpStatus.BAD_REQUEST).send();
