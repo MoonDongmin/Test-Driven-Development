@@ -5,9 +5,9 @@ import {
 import type {INestApplication} from "@nestjs/common";
 import request                 from "supertest";
 import {AppModule}             from "@/app.module";
-import {CreateSellerCommand}   from "@/commerce/command/create-seller-command";
-import {EmailGenerator}        from "../../../email-generator";
-import {UsernameGenerator}     from "../../../username-generator";
+import {CreateSellerCommand} from "@/commerce/command/create-seller-command";
+import {EmailGenerator}      from "../../../email-generator";
+import {UsernameGenerator}   from "../../../username-generator";
 import {PasswordGenerator}     from "../../../password-generator";
 import {Repository}            from "typeorm";
 import {Seller}                from "@/seller";

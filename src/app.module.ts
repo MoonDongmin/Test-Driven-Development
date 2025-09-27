@@ -4,12 +4,16 @@ import {AppService}                 from "@/app.service";
 import {SellerSignUpController}     from "@/commerce/api.controller/seller-signUp.controller";
 import {TypeOrmModule}              from "@nestjs/typeorm";
 import {Seller}                     from "@/seller";
-import * as process                 from "node:process";
 import {ConfigModule}               from "@nestjs/config";
 import {SellerIssueTokenController} from "@/commerce/api.controller/seller-issueToken.controller";
+import {JwtModule}                  from "@nestjs/jwt";
 
 @Module({
     imports: [
+        JwtModule.register({
+            global: true,
+            secret: process.env.SECRET,
+        }),
         ConfigModule.forRoot({
             isGlobal: true,
         }),
