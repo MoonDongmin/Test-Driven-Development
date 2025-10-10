@@ -8,4 +8,11 @@ Content-Type: application/json
   "password": "seller1-password"
 }
 
-###
+### 판매자 접근 토큰 발행
+POST http://localhost:8080/seller/issueToken
+Content-Type: application/json
+
+{
+  "email": "seller1@example.com",
+  "password": "seller1-password"
+}

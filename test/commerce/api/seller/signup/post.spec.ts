@@ -1,25 +1,26 @@
 import {
     Test,
     TestingModule,
-}                              from "@nestjs/testing";
-import type {INestApplication} from "@nestjs/common";
-import request                 from "supertest";
-import {AppModule}             from "@/app.module";
-import {CreateSellerCommand} from "@/commerce/command/create-seller-command";
-import {EmailGenerator}      from "../../../email-generator";
-import {UsernameGenerator}   from "../../../username-generator";
-import {PasswordGenerator}     from "../../../password-generator";
-import {Repository}            from "typeorm";
-import {Seller}                from "@/seller";
-import {getRepositoryToken}    from "@nestjs/typeorm";
+} from "@nestjs/testing";
+import type { INestApplication } from "@nestjs/common";
+import request from "supertest";
+import { AppModule } from "@/app.module";
+import { CreateSellerCommand } from "@/commerce/command/create-seller-command";
+import { EmailGenerator } from "../../../email-generator";
+import { UsernameGenerator } from "../../../username-generator";
+import { PasswordGenerator } from "../../../password-generator";
+import { Repository } from "typeorm";
+import { Seller } from "@/seller";
+import { getRepositoryToken } from "@nestjs/typeorm";
+import { TestDataSource } from "../../../test-data-source";
 
 describe("Post /seller/signUp", () => {
     let app: INestApplication;
     let sellerRepository: Repository<Seller>;
 
-    const {generateUsername} = UsernameGenerator;
-    const {generateEmail} = EmailGenerator;
-    const {generatePassword} = PasswordGenerator;
+    const { generateUsername } = UsernameGenerator;
+    const { generateEmail } = EmailGenerator;
+    const { generatePassword } = PasswordGenerator;
 
     beforeAll(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -166,11 +167,7 @@ describe("Post /seller/signUp", () => {
         expect(response.statusCode).toBe(400);
     });
 
-    it.each([
-        "",
-        "pass",
-        "pass123",
-    ])("password 속성이 올바른 형식을 따르지 않으면 400 Bad Request 상태코드를 반환한다", async (password: string) => {
+    it.each(TestDataSource.invalidPasswords())("password 속성이 올바른 형식을 따르지 않으면 400 Bad Request 상태코드를 반환한다", async (password: string) => {
         const command: CreateSellerCommand = {
             email: "seller@test.com",
             username: generateUsername(),
@@ -248,9 +245,9 @@ describe("Post /seller/signUp", () => {
             .send(command);
 
         // Assert
-        const seller = await sellerRepository.findOneBy({email: command.email});
+        const seller = await sellerRepository.findOneBy({ email: command.email });
         const isMatch = await Bun.password.verify(command.password!, seller?.password!);
         expect(isMatch).toBe(true);
-        
+
     });
 });

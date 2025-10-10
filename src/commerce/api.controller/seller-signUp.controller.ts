@@ -10,9 +10,11 @@ import type {CreateSellerCommand} from "@/commerce/command/create-seller-command
 import {InjectRepository}         from "@nestjs/typeorm";
 import {Seller}                   from "@/seller";
 import {Repository}               from "typeorm";
-
-const EMAIL_REGEX: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const USERNAME_REGEX: RegExp = /^[a-zA-Z0-9_-]{3,}$/;
+import {
+    isEmailValid,
+    isPasswordValid,
+    isUsernameValid,
+}                                 from "@/commerce/user-property-validator";
 
 @Controller("seller")
 export class SellerSignUpController {
@@ -28,7 +30,7 @@ export class SellerSignUpController {
             return res.status(HttpStatus.BAD_REQUEST).send();
         }
 
-        const hashedPassword = await Bun.password.hash(command.password!, {
+        const hashedPassword: string = await Bun.password.hash(command.password!, {
             algorithm: "bcrypt",
         });
 
@@ -46,20 +48,9 @@ export class SellerSignUpController {
     }
 
     private isCommandValid(command: CreateSellerCommand): boolean {
-        return this.isEmailValid(command.email)
-            && this.isUsernameValid(command.username)
-            && this.isPasswordValid(command.password);
+        return isEmailValid(command.email)
+            && isUsernameValid(command.username)
+            && isPasswordValid(command.password);
     }
 
-    private isUsernameValid(username: string | undefined): boolean {
-        return username !== undefined && USERNAME_REGEX.test(username);
-    }
-
-    private isEmailValid(email: string | undefined): boolean {
-        return email !== undefined && EMAIL_REGEX.test(email);
-    }
-
-    private isPasswordValid(password: string | undefined): boolean {
-        return password !== undefined && password.length >= 8;
-    }
 }

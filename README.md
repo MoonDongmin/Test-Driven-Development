@@ -114,7 +114,7 @@
   ```bash
   curl -i -X POST 'http://localhost:8080/shopper/signUp' \
   -H 'Content-Type: application/json' \
-  -d '{
+  -d '{ 
     "email": "shopper1@example.com",
     "username": "shopper1",
     "password": "shopper1-password"
@@ -132,17 +132,17 @@
 - 비밀번호는 연속된 4개 이상의 문자를 포함해서는 안 된다
 
 테스트
-- [ ] 올바르게 요청하면 204 No Content 상태코드를 반환한다
-- [ ] email 속성이 지정되지 않으면 400 Bad Request 상태코드를 반환한다
-- [ ] email 속성이 올바른 형식을 따르지 않으면 400 Bad Request 상태코드를 반환한다
-- [ ] username 속성이 지정되지 않으면 400 Bad Request 상태코드를 반환한다
-- [ ] username 속성이 올바른 형식을 따르지 않으면 400 Bad Request 상태코드를 반환한다
-- [ ] username 속성이 올바른 형식을 따르면 204 No Content 상태코드를 반환한다
-- [ ] password 속성이 지정되지 않으면 400 Bad Request 상태코드를 반환한다
-- [ ] password 속성이 올바른 형식을 따르지 않으면 400 Bad Request 상태코드를 반환한다
-- [ ] email 속성에 이미 존재하는 이메일 주소가 지정되면 400 Bad Request 상태코드를 반환한다
-- [ ] username 속성이 이미 존재하는 사용자이름이 지정되면 400 Bad Request 상태코드를 반환한다
-- [ ] 비밀번호를 올바르게 암호화한다
+- [x] 올바르게 요청하면 204 No Content 상태코드를 반환한다
+- [x] email 속성이 지정되지 않으면 400 Bad Request 상태코드를 반환한다
+- [x] email 속성이 올바른 형식을 따르지 않으면 400 Bad Request 상태코드를 반환한다
+- [x] username 속성이 지정되지 않으면 400 Bad Request 상태코드를 반환한다
+- [x] username 속성이 올바른 형식을 따르지 않으면 400 Bad Request 상태코드를 반환한다
+- [x] username 속성이 올바른 형식을 따르면 204 No Content 상태코드를 반환한다
+- [x] password 속성이 지정되지 않으면 400 Bad Request 상태코드를 반환한다
+- [x] password 속성이 올바른 형식을 따르지 않으면 400 Bad Request 상태코드를 반환한다
+- [x] email 속성에 이미 존재하는 이메일 주소가 지정되면 400 Bad Request 상태코드를 반환한다
+- [x] username 속성이 이미 존재하는 사용자이름이 지정되면 400 Bad Request 상태코드를 반환한다
+- [x] 비밀번호를 올바르게 암호화한다
 
 ### 구매자 접근 토큰 발행
 
@@ -176,10 +176,10 @@
   ```
 
 테스트
-- [ ] 올바르게 요청하면 200 OK 상태코드와 접근 토큰을 반환한다
-- [ ] 접근 토큰은 JWT 형식을 따른다
-- [ ] 존재하지 않는 이메일 주소가 사용되면 400 Bad Request 상태코드를 반환한다
-- [ ] 잘못된 비밀번호가 사용되면 400 Bad Request 상태코드를 반환한다
+- [x] 올바르게 요청하면 200 OK 상태코드와 접근 토큰을 반환한다
+- [x] 접근 토큰은 JWT 형식을 따른다
+- [x] 존재하지 않는 이메일 주소가 사용되면 400 Bad Request 상태코드를 반환한다
+- [x] 잘못된 비밀번호가 사용되면 400 Bad Request 상태코드를 반환한다
 
 ### 판매자 정보 조회
 
