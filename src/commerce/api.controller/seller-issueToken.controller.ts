@@ -39,13 +39,13 @@ export class SellerIssueTokenController {
         }
 
         const token: AccessTokenCarrier = {
-            accessToken: this.composeToken(),
+            accessToken: this.composeToken(result),
         };
 
         return res.status(HttpStatus.OK).send(token);
     }
 
-    private composeToken() {
-        return this.jwtService.sign("");
+    private composeToken(seller: Seller) {
+        return this.jwtService.sign({sub: seller.id});
     }
 }

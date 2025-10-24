@@ -16,3 +16,14 @@ Content-Type: application/json
   "email": "seller1@example.com",
   "password": "seller1-password"
 }
+
+> {%
+    client.global.set("accessToken", response.body.accessToken);
+%}
+
+### 판매자 정보 조회
+GET http://localhost:8080/seller/me
+Authorization: Bearer {{accessToken}}
+
+
+

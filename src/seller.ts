@@ -10,6 +10,9 @@ export class Seller {
     dataKey: number;
 
     @Column({unique: true})
+    id: string;
+
+    @Column({unique: true})
     email: string;
 
     @Column({unique: true})

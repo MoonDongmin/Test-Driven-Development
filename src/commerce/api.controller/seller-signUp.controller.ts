@@ -15,6 +15,10 @@ import {
     isPasswordValid,
     isUsernameValid,
 }                                 from "@/commerce/user-property-validator";
+import {
+    randomUUID,
+    UUID,
+}                                 from "node:crypto";
 
 @Controller("seller")
 export class SellerSignUpController {
@@ -35,7 +39,10 @@ export class SellerSignUpController {
         });
 
         try {
+            const id: UUID = randomUUID();
+
             await this.sellerRepository.save({
+                id,
                 email: command.email,
                 username: command.username,
                 password: hashedPassword,

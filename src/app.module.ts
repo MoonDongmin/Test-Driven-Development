@@ -10,6 +10,7 @@ import {JwtModule}                   from "@nestjs/jwt";
 import {ShopperSignUpController}     from "@/commerce/api.controller/shopper-signUp.controller";
 import {Shopper}                     from "@/commerce/shopper";
 import {ShopperIssueTokenController} from "@/commerce/api.controller/shopper-issueToken.controller";
+import {SellerMeController}          from "@/commerce/api.controller/seller-me.controller";
 
 @Module({
     imports: [
@@ -30,7 +31,7 @@ import {ShopperIssueTokenController} from "@/commerce/api.controller/shopper-iss
             entities: [Seller, Shopper],
         }),
     ],
-    controllers: [AppController, SellerSignUpController, SellerIssueTokenController, ShopperSignUpController, ShopperIssueTokenController],
+    controllers: [AppController, SellerSignUpController, SellerIssueTokenController, ShopperSignUpController, ShopperIssueTokenController, SellerMeController],
     providers: [AppService],
 })
 export class AppModule {
