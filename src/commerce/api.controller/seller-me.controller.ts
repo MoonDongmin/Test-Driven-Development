@@ -1,14 +1,12 @@
 import {
-    Controller,
-    Get,
-    Req,
-    UnauthorizedException,
-    UseGuards,
-}                     from "@nestjs/common";
-import {AuthGuard}    from "@/commerce/api.controller/auth.guard";
-import {SellerMeView} from "@/commerce/view/seller-me-view";
-import {Repository}   from "typeorm";
-import {Seller}       from "@/seller";
+  Controller,
+  Get,
+  Req,
+  UnauthorizedException,
+}                         from "@nestjs/common";
+import {SellerMeView}     from "@/commerce/view/seller-me-view";
+import {Repository}       from "typeorm";
+import {Seller}           from "@/seller";
 import {InjectRepository} from "@nestjs/typeorm";
 
 @Controller()
@@ -20,7 +18,6 @@ export class SellerMeController {
     }
 
     @Get("seller/me")
-    @UseGuards(AuthGuard)
     async me(@Req() req: any): Promise<SellerMeView> {
         if (!req.user) {
             throw new UnauthorizedException();

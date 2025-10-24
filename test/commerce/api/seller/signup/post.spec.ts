@@ -1,18 +1,18 @@
 import {
-    Test,
-    TestingModule,
-} from "@nestjs/testing";
-import type { INestApplication } from "@nestjs/common";
-import request from "supertest";
-import { AppModule } from "@/app.module";
-import { CreateSellerCommand } from "@/commerce/command/create-seller-command";
-import { EmailGenerator } from "../../../email-generator";
-import { UsernameGenerator } from "../../../username-generator";
-import { PasswordGenerator } from "../../../password-generator";
-import { Repository } from "typeorm";
-import { Seller } from "@/seller";
-import { getRepositoryToken } from "@nestjs/typeorm";
-import { TestDataSource } from "../../../test-data-source";
+  Test,
+  TestingModule,
+}                              from "@nestjs/testing";
+import type {INestApplication} from "@nestjs/common";
+import request                 from "supertest";
+import {AppModule}             from "@/app.module";
+import {CreateSellerCommand}   from "@/commerce/command/create-seller-command";
+import {EmailGenerator}        from "../../../email-generator";
+import {UsernameGenerator}     from "../../../username-generator";
+import {PasswordGenerator}     from "../../../password-generator";
+import {Repository}            from "typeorm";
+import {Seller}                from "@/seller";
+import {getRepositoryToken}    from "@nestjs/typeorm";
+import {TestDataSource}        from "../../../test-data-source";
 
 describe("Post /seller/signUp", () => {
     let app: INestApplication;

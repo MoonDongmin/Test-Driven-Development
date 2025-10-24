@@ -1,7 +1,7 @@
 import {
-    Column,
-    Entity,
-    PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 
 @Entity()

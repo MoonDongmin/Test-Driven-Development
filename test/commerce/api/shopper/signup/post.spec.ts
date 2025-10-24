@@ -4,15 +4,14 @@ import {UsernameGenerator}     from "../../../username-generator";
 import {EmailGenerator}        from "../../../email-generator";
 import {PasswordGenerator}     from "../../../password-generator";
 import {
-    Test,
-    TestingModule,
+  Test,
+  TestingModule,
 }                              from "@nestjs/testing";
 import {AppModule}             from "@/app.module";
 import {CreateShopperCommand}  from "@/commerce/command/create-shopper-command";
 import {CreateSellerCommand}   from "@/commerce/command/create-seller-command";
 import {TestDataSource}        from "../../../test-data-source";
 import {Repository}            from "typeorm";
-import {Seller}                from "@/seller";
 import {Shopper}               from "@/commerce/shopper";
 import {getRepositoryToken}    from "@nestjs/typeorm";
 

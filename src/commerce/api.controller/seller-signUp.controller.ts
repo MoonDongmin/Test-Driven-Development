@@ -1,9 +1,9 @@
 import {
-    Body,
-    Controller,
-    HttpStatus,
-    Post,
-    Res,
+  Body,
+  Controller,
+  HttpStatus,
+  Post,
+  Res,
 }                                 from "@nestjs/common";
 import type {Response}            from "express";
 import type {CreateSellerCommand} from "@/commerce/command/create-seller-command";
@@ -11,14 +11,15 @@ import {InjectRepository}         from "@nestjs/typeorm";
 import {Seller}                   from "@/seller";
 import {Repository}               from "typeorm";
 import {
-    isEmailValid,
-    isPasswordValid,
-    isUsernameValid,
+  isEmailValid,
+  isPasswordValid,
+  isUsernameValid,
 }                                 from "@/commerce/user-property-validator";
 import {
-    randomUUID,
-    UUID,
+  randomUUID,
+  UUID,
 }                                 from "node:crypto";
+import {Public}                   from "@/commerce/api.controller/auth.guard";
 
 @Controller("seller")
 export class SellerSignUpController {
@@ -28,6 +29,7 @@ export class SellerSignUpController {
     ) {
     }
 
+    @Public()
     @Post("/signUp")
     async singUp(@Res() res: Response, @Body() command: CreateSellerCommand) {
         if (this.isCommandValid(command) === false) {

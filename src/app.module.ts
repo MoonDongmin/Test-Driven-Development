@@ -11,28 +11,36 @@ import {ShopperSignUpController}     from "@/commerce/api.controller/shopper-sig
 import {Shopper}                     from "@/commerce/shopper";
 import {ShopperIssueTokenController} from "@/commerce/api.controller/shopper-issueToken.controller";
 import {SellerMeController}          from "@/commerce/api.controller/seller-me.controller";
+import {ShopperMeController}         from "@/commerce/api.controller/shopper-me.controller";
+import {AuthGuard}                   from "@/commerce/api.controller/auth.guard";
+import {APP_GUARD}                   from "@nestjs/core";
 
 @Module({
-    imports: [
-        JwtModule.register({
-            global: true,
-            secret: process.env.SECRET,
-        }),
-        ConfigModule.forRoot({
-            isGlobal: true,
-        }),
-        TypeOrmModule.forFeature([Seller, Shopper]),
-        TypeOrmModule.forRoot({
-            type: "postgres",
-            url: process.env.TEST_DB_URL,
-            ssl: true,
-            synchronize: true,
-            dropSchema: true,
-            entities: [Seller, Shopper],
-        }),
-    ],
-    controllers: [AppController, SellerSignUpController, SellerIssueTokenController, ShopperSignUpController, ShopperIssueTokenController, SellerMeController],
-    providers: [AppService],
+  imports: [
+    JwtModule.register({
+      global: true,
+      secret: process.env.SECRET,
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forFeature([Seller, Shopper]),
+    TypeOrmModule.forRoot({
+      type: "postgres",
+      url: process.env.TEST_DB_URL,
+      ssl: true,
+      synchronize: true,
+      dropSchema: true,
+      entities: [Seller, Shopper],
+    }),
+  ],
+  controllers: [AppController, SellerSignUpController, SellerIssueTokenController, ShopperSignUpController, ShopperIssueTokenController, SellerMeController, ShopperMeController],
+  providers: [AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule {
 }

@@ -1,24 +1,27 @@
 import {
-    Column,
-    Entity,
-    PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 
 @Entity()
 export class Shopper {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  dataKey: number;
 
-    @Column({
-        unique: true,
-    })
-    email: string;
+  @Column({unique: true})
+  id: string;
 
-    @Column({
-        unique: true,
-    })
-    username: string;
+  @Column({
+    unique: true,
+  })
+  email: string;
 
-    @Column({length: 1000})
-    hashedPassword: string;
+  @Column({
+    unique: true,
+  })
+  username: string;
+
+  @Column({length: 1000})
+  hashedPassword: string;
 }

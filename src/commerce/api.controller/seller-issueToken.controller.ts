@@ -1,10 +1,10 @@
 import {
-    BadRequestException,
-    Body,
-    Controller,
-    HttpStatus,
-    Post,
-    Res,
+  BadRequestException,
+  Body,
+  Controller,
+  HttpStatus,
+  Post,
+  Res,
 }                              from "@nestjs/common";
 import type {Response}         from "express";
 import {AccessTokenCarrier}    from "@/commerce/result/access-token-carrier";
@@ -13,6 +13,7 @@ import {InjectRepository}      from "@nestjs/typeorm";
 import {Seller}                from "@/seller";
 import {Repository}            from "typeorm";
 import type {IssueSellerToken} from "@/commerce/query/issue-seller-token";
+import {Public}                from "@/commerce/api.controller/auth.guard";
 
 @Controller("seller")
 export class SellerIssueTokenController {
@@ -23,7 +24,8 @@ export class SellerIssueTokenController {
     ) {
     }
 
-    @Post("issueToken")
+  @Public()
+  @Post("issueToken")
     async issueToken(@Res() res: Response, @Body() query: IssueSellerToken) {
         const result: Seller | null = await this.repository.findOneBy({
             email: query.email,
