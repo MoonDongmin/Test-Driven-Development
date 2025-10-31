@@ -14,6 +14,7 @@ import {SellerMeController}          from "@/commerce/api.controller/seller-me.c
 import {ShopperMeController}         from "@/commerce/api.controller/shopper-me.controller";
 import {AuthGuard}                   from "@/commerce/api.controller/auth.guard";
 import {APP_GUARD}                   from "@nestjs/core";
+import {SellerProductsController}    from "@/commerce/api.controller/seller-products.controller";
 
 @Module({
   imports: [
@@ -34,7 +35,16 @@ import {APP_GUARD}                   from "@nestjs/core";
       entities: [Seller, Shopper],
     }),
   ],
-  controllers: [AppController, SellerSignUpController, SellerIssueTokenController, ShopperSignUpController, ShopperIssueTokenController, SellerMeController, ShopperMeController],
+  controllers: [
+    AppController,
+    SellerSignUpController,
+    SellerIssueTokenController,
+    ShopperSignUpController,
+    ShopperIssueTokenController,
+    SellerMeController,
+    ShopperMeController,
+    SellerProductsController,
+  ],
   providers: [AppService,
     {
       provide: APP_GUARD,

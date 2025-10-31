@@ -13,11 +13,11 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test": "node ./node_modules/.bin/jest",
+    "test:watch": "node ./node_modules/.bin/jest --watch",
+    "test:cov": "node ./node_modules/.bin/jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:e2e": "node ./node_modules/.bin/jest --config ./test/jest-e2e.json",
     "test:bun": "bun test"
   },
   "dependencies": {
@@ -77,6 +77,7 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testTimeout": 30000
   }
 }

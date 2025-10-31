@@ -52,6 +52,17 @@ export class TextFixture {
     return carrier.body.accessToken;
   }
 
+  public async issueSellerToken(email: string, password: string) {
+    const carrier = await this.client()
+      .post("/seller/issueToken")
+      .send({
+        email,
+        password,
+      });
+
+    return carrier.body.accessToken;
+  }
+
   public async createShopperThenIssueToken() {
     const email: string = generateEmail();
     const password: string = generatePassword();
@@ -66,8 +77,15 @@ export class TextFixture {
     this.testClient = this.createDefaultTestClient(token);
   }
 
+  public async setSellerAsDefaultUser(email: string, password: string) {
+    const token: string = await this.issueSellerToken(email, password);
+
+    this.testClient = this.createDefaultTestClient(token);
+  }
+
   createDefaultTestClient(token: string) {
     const sever = this.app.getHttpServer();
+
     return {
       get: (url: string) => request(sever).get(url).set("Authorization", "Bearer " + token),
       post: (url: string) => request(sever).post(url).set("Authorization", "Bearer " + token),
@@ -76,4 +94,31 @@ export class TextFixture {
     };
   }
 
+  async createSellerThenSetAsDefaultUser(): Promise<void> {
+    const email: string = generateEmail();
+    const password: string = generatePassword();
+
+    await this.createSeller(email, generateUsername(), password);
+    await this.setSellerAsDefaultUser(email, password);
+  }
+
+  private async createSeller(email: string, username: string, password: string) {
+    const command: CreateSellerCommand = {
+      email,
+      username,
+      password,
+    };
+
+    await this.client()
+      .post("/seller/signUp")
+      .send(command);
+  }
+
+  async createShopperThenSetAsDefaultUser(): Promise<void> {
+    const email: string = generateEmail();
+    const password: string = generatePassword();
+
+    await this.createShopper(email, generateUsername(), password);
+    await this.setShopperAsDefaultUser(email, password);
+  }
 }
