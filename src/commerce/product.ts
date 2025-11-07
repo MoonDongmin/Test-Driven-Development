@@ -24,8 +24,8 @@ export class Product {
   @Column()
   description: string;
 
-  @Column()
-  priceAmount: number;
+  @Column({type: "bigint"})
+  priceAmount: bigint;
 
   @Column()
   stockQuantity: number;

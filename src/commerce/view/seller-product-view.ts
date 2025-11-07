@@ -3,12 +3,12 @@ export class SellerProductView {
   name: string | null;
   imageUri: string | null;
   description: string | null;
-  priceAmount: number | null;
+  priceAmount: string | null;
   stockQuantity: number | null;
   registeredTimeUtc: string | null;
 
 
-  constructor(id: string, name: string | null, imageUri: string | null, description: string | null, priceAmount: number | null, stockQuantity: number | null, registeredTimeUtc: string | null) {
+  constructor(id: string, name: string | null, imageUri: string | null, description: string | null, priceAmount: string | null, stockQuantity: number | null, registeredTimeUtc: string | null) {
     this.id = id;
     this.name = name;
     this.imageUri = imageUri;

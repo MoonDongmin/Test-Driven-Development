@@ -5,11 +5,11 @@ export class RegisterProductCommand {
 
   description: string;
 
-  priceAmount: number;
+  priceAmount: string;
 
   stockQuantity: number;
 
-  constructor(name: string, imageUri: string, description: string, priceAmount: number, stockQuantity: number) {
+  constructor(name: string, imageUri: string, description: string, priceAmount: string, stockQuantity: number) {
     this.name = name;
     this.imageUri = imageUri;
     this.description = description;

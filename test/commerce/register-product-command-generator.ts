@@ -32,13 +32,13 @@ export class RegisterProductCommandGenerator {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  private static generateProductPriceAmount(): number {
+  private static generateProductPriceAmount(): string {
     const min = 10000;
     const max = 1000000;
 
     const randomValue: number = Math.floor(Math.random() * (max - min + 1)) + min;
 
-    return randomValue;
+    return randomValue.toString();
   }
 
   private static generateProductDescription(): string {

@@ -44,7 +44,7 @@ export class SellerProductsController {
     product.name = command.name;
     product.imageUri = command.imageUri;
     product.description = command.description;
-    product.priceAmount = command.priceAmount;
+    product.priceAmount = BigInt(command.priceAmount);
     product.stockQuantity = command.stockQuantity;
 
     await this.productRepository.save(product);
@@ -81,7 +81,7 @@ export class SellerProductsController {
       product.name,
       product.imageUri,
       product.description,
-      product.priceAmount,
+      product.priceAmount.toString(),
       product.stockQuantity,
       null,
     );
