@@ -3,7 +3,7 @@ import {AppController}               from "@/app.controller";
 import {AppService}                  from "@/app.service";
 import {SellerSignUpController}      from "@/commerce/api.controller/seller-signUp.controller";
 import {TypeOrmModule}               from "@nestjs/typeorm";
-import {Seller}                      from "@/seller";
+import {Seller}                      from "@/commerce/seller";
 import {ConfigModule}                from "@nestjs/config";
 import {SellerIssueTokenController}  from "@/commerce/api.controller/seller-issueToken.controller";
 import {JwtModule}                   from "@nestjs/jwt";
@@ -15,6 +15,7 @@ import {ShopperMeController}         from "@/commerce/api.controller/shopper-me.
 import {AuthGuard}                   from "@/commerce/api.controller/auth.guard";
 import {APP_GUARD}                   from "@nestjs/core";
 import {SellerProductsController}    from "@/commerce/api.controller/seller-products.controller";
+import {Product}                     from "@/commerce/product";
 
 @Module({
   imports: [
@@ -25,14 +26,14 @@ import {SellerProductsController}    from "@/commerce/api.controller/seller-prod
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forFeature([Seller, Shopper]),
+    TypeOrmModule.forFeature([Seller, Shopper, Product]),
     TypeOrmModule.forRoot({
       type: "postgres",
       url: process.env.TEST_DB_URL,
       ssl: true,
       synchronize: true,
       dropSchema: true,
-      entities: [Seller, Shopper],
+      entities: [Seller, Shopper, Product],
     }),
   ],
   controllers: [

@@ -6,7 +6,7 @@ import {
 }                         from "@nestjs/common";
 import {SellerMeView}     from "@/commerce/view/seller-me-view";
 import {Repository}       from "typeorm";
-import {Seller}           from "@/seller";
+import {Seller}           from "@/commerce/seller";
 import {InjectRepository} from "@nestjs/typeorm";
 
 @Controller()

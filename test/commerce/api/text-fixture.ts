@@ -1,9 +1,11 @@
-import {INestApplication}    from "@nestjs/common";
-import request, {Test}       from "supertest";
-import {CreateSellerCommand} from "@/commerce/command/create-seller-command";
-import {UsernameGenerator}   from "../username-generator";
-import {EmailGenerator}      from "../email-generator";
-import {PasswordGenerator}   from "../password-generator";
+import {INestApplication}                from "@nestjs/common";
+import request, {Test}                   from "supertest";
+import {CreateSellerCommand}             from "@/commerce/command/create-seller-command";
+import {UsernameGenerator}               from "../username-generator";
+import {EmailGenerator}                  from "../email-generator";
+import {PasswordGenerator}               from "../password-generator";
+import {RegisterProductCommand}          from "@/commerce/command/register-product-command";
+import {RegisterProductCommandGenerator} from "../register-product-command-generator";
 
 const {generateUsername} = UsernameGenerator;
 const {generateEmail} = EmailGenerator;
@@ -120,5 +122,17 @@ export class TextFixture {
 
     await this.createShopper(email, generateUsername(), password);
     await this.setShopperAsDefaultUser(email, password);
+  }
+
+  async registerProduct(command: RegisterProductCommandGenerator) {
+    const cmd = command ?? RegisterProductCommandGenerator.generateRegisterProductCommand();
+    const response = await this.client()
+      .post("/seller/products")
+      .send(cmd);
+
+    const location: string = response.headers.location;
+    const id: string = location.split("/")[3];
+
+    return id;
   }
 }

@@ -3,7 +3,7 @@ import {randomUUID}             from "node:crypto";
 
 export class RegisterProductCommandGenerator {
 
-  public static generateRegisterProductCommand(): RegisterProductCommandGenerator {
+  public static generateRegisterProductCommand(): RegisterProductCommand {
     return new RegisterProductCommand(
       this.generateProductName(),
       this.generateProductImageUri(),
@@ -12,6 +12,7 @@ export class RegisterProductCommandGenerator {
       this.generateProductStockQuantity(),
     );
   }
+
 
   public static generateRegisterProductCommandWithOutImageUri(imageUri: string) {
     return new RegisterProductCommand(
@@ -23,6 +24,7 @@ export class RegisterProductCommandGenerator {
     );
   }
 
+
   private static generateProductStockQuantity(): number {
     const min = 10;
     const max = 100;
@@ -30,13 +32,13 @@ export class RegisterProductCommandGenerator {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  private static generateProductPriceAmount(): bigint {
+  private static generateProductPriceAmount(): number {
     const min = 10000;
     const max = 1000000;
 
     const randomValue: number = Math.floor(Math.random() * (max - min + 1)) + min;
 
-    return BigInt(randomValue);
+    return randomValue;
   }
 
   private static generateProductDescription(): string {

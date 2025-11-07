@@ -1,6 +1,7 @@
 import {
   CanActivate,
   ExecutionContext,
+  ForbiddenException,
   Injectable,
   SetMetadata,
   UnauthorizedException,
@@ -25,20 +26,39 @@ export class AuthGuard implements CanActivate {
       context.getHandler(),
       context.getClass(),
     ]);
+
     if (isPublic) {
       return true;
     }
 
-    const request: any = context.switchToHttp().getRequest();
+    const request: any = context.switchToHttp().getRequest() as Request & {
+      user?: { user?: { sub: string, scp: string } }
+    };
 
     const token: string | undefined = this.extractTokenFromHeader(request);
+
     if (!token) {
       throw new UnauthorizedException();
     }
 
     try {
-      request.user = this.getUserFromToken(token);
-    } catch {
+      const user = this.getUserFromToken(token);
+      request.user = user;
+
+      const controller = Reflect.getMetadata("path", context.getClass());
+
+      if (controller === "seller") {
+        if (user.scp !== "seller") {
+          throw new ForbiddenException();
+        }
+      }
+
+      return true;
+    } catch (error) {
+      if (error instanceof ForbiddenException) {
+        throw new ForbiddenException();
+      }
+
       throw new UnauthorizedException();
     }
     return true;

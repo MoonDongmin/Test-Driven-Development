@@ -9,9 +9,9 @@ import {CreateSellerCommand}   from "@/commerce/command/create-seller-command";
 import {EmailGenerator}        from "../../../email-generator";
 import {UsernameGenerator}     from "../../../username-generator";
 import {PasswordGenerator}     from "../../../password-generator";
-import {Repository}            from "typeorm";
-import {Seller}                from "@/seller";
-import {getRepositoryToken}    from "@nestjs/typeorm";
+import {Repository}         from "typeorm";
+import {Seller}             from "@/commerce/seller";
+import {getRepositoryToken} from "@nestjs/typeorm";
 import {TestDataSource}        from "../../../test-data-source";
 
 describe("Post /seller/signUp", () => {

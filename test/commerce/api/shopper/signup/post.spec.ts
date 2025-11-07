@@ -19,7 +19,6 @@ describe("/shopper/signup", () => {
     let app: INestApplication;
     let shopperRepository: Repository<Shopper>;
 
-
     const {generateUsername} = UsernameGenerator;
     const {generateEmail} = EmailGenerator;
     const {generatePassword} = PasswordGenerator;
@@ -258,7 +257,4 @@ describe("/shopper/signup", () => {
         const isMatch: boolean = await Bun.password.verify(command.password!, shopper?.hashedPassword!);
         expect(isMatch).toBe(true);
     });
-
-
-
 });
