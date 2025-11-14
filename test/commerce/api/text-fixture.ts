@@ -4,7 +4,6 @@ import {CreateSellerCommand}             from "@/commerce/command/create-seller-
 import {UsernameGenerator}               from "../username-generator";
 import {EmailGenerator}                  from "../email-generator";
 import {PasswordGenerator}               from "../password-generator";
-import {RegisterProductCommand}          from "@/commerce/command/register-product-command";
 import {RegisterProductCommandGenerator} from "../register-product-command-generator";
 
 const {generateUsername} = UsernameGenerator;

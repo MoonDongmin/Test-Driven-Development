@@ -2,7 +2,6 @@ import {
   BadRequestException,
   Body,
   Controller,
-  ForbiddenException,
   Get,
   HttpStatus,
   NotFoundException,
@@ -12,7 +11,6 @@ import {
   Res,
 }                               from "@nestjs/common";
 import {Repository}             from "typeorm";
-import {Seller}                 from "@/commerce/seller";
 import {InjectRepository}       from "@nestjs/typeorm";
 import {RegisterProductCommand} from "@/commerce/command/register-product-command";
 import {

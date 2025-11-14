@@ -12,9 +12,7 @@ import {
   randomUUID,
   UUID,
 }                                        from "node:crypto";
-import {log}                             from "node:console";
 import {RegisterProductCommandGenerator} from "../../../../register-product-command-generator";
-import {RegisterProductCommand}          from "@/commerce/command/register-product-command";
 
 // declare global {
 //   interface BigInt {

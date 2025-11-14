@@ -7,9 +7,9 @@ import {
 }                                 from "@nestjs/common";
 import type {Response}            from "express";
 import type {CreateSellerCommand} from "@/commerce/command/create-seller-command";
-import {InjectRepository} from "@nestjs/typeorm";
-import {Seller}           from "@/commerce/seller";
-import {Repository}       from "typeorm";
+import {InjectRepository}         from "@nestjs/typeorm";
+import {Seller}                   from "@/commerce/seller";
+import {Repository}               from "typeorm";
 import {
   isEmailValid,
   isPasswordValid,

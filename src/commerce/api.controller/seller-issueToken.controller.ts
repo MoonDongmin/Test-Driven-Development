@@ -9,9 +9,9 @@ import {
 import type {Response}         from "express";
 import {AccessTokenCarrier}    from "@/commerce/result/access-token-carrier";
 import {JwtService}            from "@nestjs/jwt";
-import {InjectRepository} from "@nestjs/typeorm";
-import {Seller}           from "@/commerce/seller";
-import {Repository}       from "typeorm";
+import {InjectRepository}      from "@nestjs/typeorm";
+import {Seller}                from "@/commerce/seller";
+import {Repository}            from "typeorm";
 import type {IssueSellerToken} from "@/commerce/query/issue-seller-token";
 import {Public}                from "@/commerce/api.controller/auth.guard";
 
