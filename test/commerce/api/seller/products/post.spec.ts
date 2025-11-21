@@ -21,10 +21,6 @@ describe("POST /seller/products", () => {
   let app: INestApplication;
   let fixture;
 
-  const {generateUsername} = UsernameGenerator;
-  const {generateEmail} = EmailGenerator;
-  const {generatePassword} = PasswordGenerator;
-
   beforeAll(async () => {
 
     BigInt.prototype.toJSON = function () {
@@ -99,7 +95,6 @@ describe("POST /seller/products", () => {
     }
 
     const actual = response.headers.location;
-    console.log(response.headers.location);
 
     expect(actual).toBeDefined();
     expect(path.isAbsolute(actual)).toBeTruthy();

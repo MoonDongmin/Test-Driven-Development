@@ -44,6 +44,7 @@ export class SellerProductsController {
     product.description = command.description;
     product.priceAmount = BigInt(command.priceAmount);
     product.stockQuantity = command.stockQuantity;
+    product.registeredTimeUtc = new Date(Date.now());
 
     await this.productRepository.save(product);
 
@@ -74,16 +75,33 @@ export class SellerProductsController {
       throw new NotFoundException();
     }
 
-    const sellerProductView = new SellerProductView(
+    const sellerProductView = this.convertToView(product);
+
+    return res.status(HttpStatus.OK).send(sellerProductView);
+  }
+
+  @Get("products")
+  async getProducts(@Req() req: any) {
+    const items: Product[] = await this.productRepository.find({
+      where: {
+        sellerId: req.user.sub,
+      },
+    });
+
+    return items
+      .map(product => this.convertToView(product))
+      .sort((a, b) => b.registeredTimeUtc.getTime() - a.registeredTimeUtc.getTime());
+  }
+
+  private convertToView(product: Product) {
+    return new SellerProductView(
       product.id,
       product.name,
       product.imageUri,
       product.description,
       product.priceAmount.toString(),
       product.stockQuantity,
-      null,
+      product.registeredTimeUtc,
     );
-
-    return res.status(HttpStatus.OK).send(sellerProductView);
   }
 }

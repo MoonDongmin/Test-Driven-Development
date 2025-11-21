@@ -123,7 +123,7 @@ export class TextFixture {
     await this.setShopperAsDefaultUser(email, password);
   }
 
-  async registerProduct(command: RegisterProductCommandGenerator) {
+  async registerProduct(command?: RegisterProductCommandGenerator) {
     const cmd = command ?? RegisterProductCommandGenerator.generateRegisterProductCommand();
     const response = await this.client()
       .post("/seller/products")
@@ -133,5 +133,9 @@ export class TextFixture {
     const id: string = location.split("/")[3];
 
     return id;
+  }
+
+  public async registerProducts() {
+    return [await this.registerProduct(), await this.registerProduct(), await this.registerProduct()];
   }
 }

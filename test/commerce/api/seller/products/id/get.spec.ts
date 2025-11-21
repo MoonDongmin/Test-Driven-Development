@@ -131,4 +131,22 @@ describe("GET /seller/products/{id}", () => {
     expect(actual.body.priceAmount).toEqual(command.priceAmount);
     expect(actual.body.stockQuantity).toEqual(command.stockQuantity);
   });
+
+  it("상품 등록 시각을 올바르게 반환한다", async () => {
+    // Arrange
+    await fixture.createSellerThenSetAsDefaultUser();
+    const referenceTime: Date = new Date(Date.now());
+    const id: string = await fixture.registerProduct();
+
+    // Act
+    const actual = await fixture.client().get("/seller/products/" + id).send();
+
+    // Assert
+    const actualTime = new Date(actual.body.registeredTimeUtc).getTime();
+
+    // -3의 의미:
+    // 10^3 = 1000 밀리초 = 1초 이내 차이 허용
+    // 두 타임스탬프가 1초 이내에 있으면 테스트 통과
+    expect(actualTime).toBeCloseTo(referenceTime.getTime(), -3);
+  });
 });
