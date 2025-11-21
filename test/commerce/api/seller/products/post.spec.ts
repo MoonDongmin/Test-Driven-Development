@@ -7,7 +7,7 @@ import {
   TestingModule,
 }                                        from "@nestjs/testing";
 import {AppModule}                       from "@/app.module";
-import {TextFixture}                     from "../../text-fixture";
+import {TestFixture}                     from "../../test-fixture";
 import {RegisterProductCommandGenerator} from "../../../register-product-command-generator";
 import path                              from "node:path";
 
@@ -32,7 +32,7 @@ describe("POST /seller/products", () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    fixture = new TextFixture(app);
+    fixture = new TestFixture(app);
     await app.init();
   });
 

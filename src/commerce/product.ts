@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  Index,
   PrimaryGeneratedColumn,
 } from "typeorm";
 
@@ -13,6 +14,7 @@ export class Product {
   id: string;
 
   @Column()
+  @Index()
   sellerId: string;
 
   @Column()

@@ -9,7 +9,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {ShoppeMeView}     from "@/commerce/view/shoppe-me-view";
 import {Shopper}          from "@/commerce/shopper";
 
-@Controller()
+@Controller("shopper")
 export class ShopperMeController {
   constructor(
     @InjectRepository(Shopper)
@@ -17,7 +17,7 @@ export class ShopperMeController {
   ) {
   }
 
-  @Get("shopper/me")
+  @Get("me")
   async me(@Req() req: any) {
     if (!req.user) {
       throw new UnauthorizedException();

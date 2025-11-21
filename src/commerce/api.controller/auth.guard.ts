@@ -53,6 +53,12 @@ export class AuthGuard implements CanActivate {
         }
       }
 
+      if (controller === "shopper") {
+        if (user.scp !== "shopper") {
+          throw new ForbiddenException();
+        }
+      }
+
       return true;
     } catch (error) {
       if (error instanceof ForbiddenException) {
