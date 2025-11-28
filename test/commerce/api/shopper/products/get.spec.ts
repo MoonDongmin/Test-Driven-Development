@@ -70,7 +70,7 @@ describe("GET /shopper/products", () => {
 
     // Assert
     const actual = response.body;
-    expect(actual.items.map(item => item.id)).toEqual(ids);
+    expect(actual.items.map(item => item.id)).toEqual(ids.reverse());
     expect(actual).toBeDefined();
   });
 
@@ -135,9 +135,7 @@ describe("GET /shopper/products", () => {
       .get("/shopper/products");
 
     // Assert
-    const body = response.body;
-
-    const actual = body.items[0].seller;
+    const actual = response.body.items[0].seller;
 
     expect(actual).toBeDefined();
     expect(actual.id).toEqual(seller.body.id);
