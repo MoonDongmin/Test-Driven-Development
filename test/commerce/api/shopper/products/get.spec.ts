@@ -10,10 +10,6 @@ import {Product}                         from "@/commerce/product";
 import {getRepositoryToken}              from "@nestjs/typeorm";
 import {RegisterProductCommandGenerator} from "../../../register-product-command-generator";
 import {RegisterProductCommand}          from "@/commerce/command/register-product-command";
-import {SellerView}                      from "@/commerce/view/seller-view";
-import {SellerMeView}                    from "@/commerce/view/seller-me-view";
-import {ProductView}                     from "@/commerce/view/product-view";
-import {log}                             from "node:util";
 
 describe("GET /shopper/products", () => {
   let app: INestApplication;

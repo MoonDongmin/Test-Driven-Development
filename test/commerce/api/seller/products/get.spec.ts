@@ -4,12 +4,12 @@
 //   }
 // }
 
-import {AppModule}   from "@/app.module";
-import {TestFixture} from "../../test-fixture";
+import {AppModule}                       from "@/app.module";
+import {TestFixture}                     from "../../test-fixture";
 import {
   Test,
   TestingModule,
-}                    from "@nestjs/testing";
+}                                        from "@nestjs/testing";
 import {INestApplication}                from "@nestjs/common";
 import {UUID}                            from "node:crypto";
 import {RegisterProductCommandGenerator} from "../../../register-product-command-generator";

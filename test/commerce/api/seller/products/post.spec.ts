@@ -1,7 +1,4 @@
 import type {INestApplication}           from "@nestjs/common";
-import {UsernameGenerator}               from "../../../username-generator";
-import {EmailGenerator}                  from "../../../email-generator";
-import {PasswordGenerator}               from "../../../password-generator";
 import {
   Test,
   TestingModule,

@@ -7,7 +7,6 @@ import {PasswordGenerator}               from "../password-generator";
 import {RegisterProductCommandGenerator} from "../register-product-command-generator";
 import {Repository}                      from "typeorm";
 import {Product}                         from "@/commerce/product";
-import {SellerView}                      from "@/commerce/view/seller-view";
 
 const {generateUsername} = UsernameGenerator;
 const {generateEmail} = EmailGenerator;

@@ -1,14 +1,10 @@
 import {
   Controller,
   Get,
-  HttpStatus,
   Req,
-  UnauthorizedException,
 }                         from "@nestjs/common";
 import {Repository}       from "typeorm";
 import {InjectRepository} from "@nestjs/typeorm";
-import {ShoppeMeView}     from "@/commerce/view/shoppe-me-view";
-import {Shopper}          from "@/commerce/shopper";
 import {Product}          from "@/commerce/product";
 import {ProductView}      from "@/commerce/view/product-view";
 import {PageCarrier}      from "@/commerce/result/page-carrier";

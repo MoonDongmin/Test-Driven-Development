@@ -6,12 +6,12 @@ import {
   Test,
   TestingModule,
 }                                        from "@nestjs/testing";
-import {AppModule}   from "@/app.module";
-import {TestFixture} from "../../../test-fixture";
+import {AppModule}                       from "@/app.module";
+import {TestFixture}                     from "../../../test-fixture";
 import {
   randomUUID,
   UUID,
-}                    from "node:crypto";
+}                                        from "node:crypto";
 import {RegisterProductCommandGenerator} from "../../../../register-product-command-generator";
 
 // declare global {
