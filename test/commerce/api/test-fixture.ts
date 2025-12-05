@@ -157,4 +157,17 @@ export class TestFixture {
   public async getSeller(): Promise<any> {
     return this.client().get("/seller/me");
   }
+
+  public async consumeProductPage() {
+    const response = await this.client().get("/shopper/products");
+
+    return response.body.continuationToken;
+  }
+
+  public async consumeTwoProductPages() {
+    const token = await this.consumeProductPage();
+    const response = await this.client().get(`/shopper/products?continuationToken=${token}`);
+
+    return response.body.continuationToken;
+  }
 }

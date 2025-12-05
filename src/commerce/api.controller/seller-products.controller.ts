@@ -9,16 +9,17 @@ import {
   Post,
   Req,
   Res,
-}                               from "@nestjs/common";
-import {Repository}             from "typeorm";
-import {InjectRepository}       from "@nestjs/typeorm";
-import {RegisterProductCommand} from "@/commerce/command/register-product-command";
+}                                from "@nestjs/common";
+import {Repository}              from "typeorm";
+import {InjectRepository}        from "@nestjs/typeorm";
+import {RegisterProductCommand}  from "@/commerce/command/register-product-command";
 import {
   randomUUID,
   UUID,
-}                               from "node:crypto";
-import {Product}                from "@/commerce/product";
-import {SellerProductView}      from "@/commerce/view/seller-product-view";
+}                                from "node:crypto";
+import {Product}                 from "@/commerce/product";
+import {SellerProductView}       from "@/commerce/view/seller-product-view";
+import {InvalidCommandException} from "@/commerce/command-model/invalid-command.exception";
 
 @Controller("seller")
 export class SellerProductsController {
@@ -31,7 +32,7 @@ export class SellerProductsController {
   @Post("/products")
   async registerProduct(@Req() req: any, @Res() res: any, @Body() command: RegisterProductCommand) {
     if (this.isValidUri(command.imageUri) === false) {
-      throw new BadRequestException();
+      throw new InvalidCommandException();
     }
 
     const id: UUID = randomUUID();
