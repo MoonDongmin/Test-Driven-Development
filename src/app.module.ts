@@ -1,22 +1,23 @@
-import {Module}                      from "@nestjs/common";
-import {AppController}               from "@/app.controller";
-import {AppService}                  from "@/app.service";
-import {SellerSignUpController}      from "@/commerce/api.controller/seller-signUp.controller";
-import {TypeOrmModule}               from "@nestjs/typeorm";
-import {Seller}                      from "@/commerce/seller";
-import {ConfigModule}                from "@nestjs/config";
-import {SellerIssueTokenController}  from "@/commerce/api.controller/seller-issueToken.controller";
-import {JwtModule}                   from "@nestjs/jwt";
-import {ShopperSignUpController}     from "@/commerce/api.controller/shopper-signUp.controller";
-import {Shopper}                     from "@/commerce/shopper";
-import {ShopperIssueTokenController} from "@/commerce/api.controller/shopper-issueToken.controller";
-import {SellerMeController}          from "@/commerce/api.controller/seller-me.controller";
-import {ShopperMeController}         from "@/commerce/api.controller/shopper-me.controller";
-import {AuthGuard}                   from "@/commerce/api.controller/auth.guard";
-import {APP_GUARD}                   from "@nestjs/core";
-import {SellerProductsController}    from "@/commerce/api.controller/seller-products.controller";
-import {Product}                     from "@/commerce/product";
-import {ShopperProductsController}   from "@/commerce/api.controller/shopper-products.controller";
+import {Module}                         from "@nestjs/common";
+import {AppController}                  from "@/app.controller";
+import {AppService}                     from "@/app.service";
+import {SellerSignUpController}         from "@/commerce/api.controller/seller-signUp.controller";
+import {TypeOrmModule}                  from "@nestjs/typeorm";
+import {Seller}                         from "@/commerce/seller";
+import {ConfigModule}                   from "@nestjs/config";
+import {SellerIssueTokenController}     from "@/commerce/api.controller/seller-issueToken.controller";
+import {JwtModule}                      from "@nestjs/jwt";
+import {ShopperSignUpController}        from "@/commerce/api.controller/shopper-signUp.controller";
+import {Shopper}                        from "@/commerce/shopper";
+import {ShopperIssueTokenController}    from "@/commerce/api.controller/shopper-issueToken.controller";
+import {SellerMeController}             from "@/commerce/api.controller/seller-me.controller";
+import {ShopperMeController}            from "@/commerce/api.controller/shopper-me.controller";
+import {AuthGuard}                      from "@/commerce/api.controller/auth.guard";
+import {APP_GUARD}                      from "@nestjs/core";
+import {SellerProductsController}       from "@/commerce/api.controller/seller-products.controller";
+import {Product}                        from "@/commerce/product";
+import {ShopperProductsController}      from "@/commerce/api.controller/shopper-products.controller";
+import {RegisterProductCommandExecutor} from "@/commerce/command-model/register-product-command-executor";
 
 @Module({
   imports: [
@@ -46,9 +47,10 @@ import {ShopperProductsController}   from "@/commerce/api.controller/shopper-pro
     SellerMeController,
     ShopperMeController,
     SellerProductsController,
-    ShopperProductsController
+    ShopperProductsController,
   ],
-  providers: [AppService,
+  providers: [
+    AppService,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
